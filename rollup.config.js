@@ -14,7 +14,6 @@ export default {
 	},
 	output: [{
 		file: path.resolve(DIST, 'index.esm.js'),
-		sourcemap: true,
 		format: 'es',
 	}, {
 		file: path.resolve(DIST, 'index.cjs.js'),

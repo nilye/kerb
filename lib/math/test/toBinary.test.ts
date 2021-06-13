@@ -15,9 +15,11 @@ describe('to binary', () => {
 	})
 
 	test('should not return value', () => {
+		// @ts-ignore
 		expect(toRadix('123', 64)).toBeUndefined()
 		expect(toRadix(3521443, 104)).toBeUndefined()
 		expect(toRadix(43214321, -1)).toBeUndefined()
+		// @ts-ignore
 		expect(toRadix(43214321, '421')).toBeUndefined()
 	})
 

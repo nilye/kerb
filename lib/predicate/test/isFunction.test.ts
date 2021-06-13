@@ -16,22 +16,22 @@ function isFunctionTypeof(value){
 describe('isFunction', ()=>{
 
 	test('should return `true`', () => {
-		expect(isFunction(setTimeout)).toBeTrue()
-		expect(isFunction(() => {})).toBeTrue()
-		expect(isFunction(async () => {})).toBeTrue()
-		expect(isFunction(Object)).toBeTrue()
-		expect(isFunction(function *() { yield 1})).toBeTrue()
-		expect(isFunction(function(){})).toBeTrue()
-		expect(isFunction(Array.prototype.push)).toBeTrue()
-		expect(isFunction(new Function('void 0'))).toBeTrue()
-		expect(isFunction(new Proxy(() => void 0, {}))).toBeTrue()
+		expect(isFunction(setTimeout)).toBeTruthy()
+		expect(isFunction(() => {})).toBeTruthy()
+		expect(isFunction(async () => {})).toBeTruthy()
+		expect(isFunction(Object)).toBeTruthy()
+		expect(isFunction(function *() { yield 1})).toBeTruthy()
+		expect(isFunction(function(){})).toBeTruthy()
+		expect(isFunction(Array.prototype.push)).toBeTruthy()
+		expect(isFunction(new Function('void 0'))).toBeTruthy()
+		expect(isFunction(new Proxy(() => void 0, {}))).toBeTruthy()
 	})
 
 	test('should return `false`', () => {
-		expect(isFunction(123)).toBeFalse()
-		expect(isFunction('function')).toBeFalse()
-		expect(isFunction(null)).toBeFalse()
-		expect(isFunction({})).toBeFalse()
+		expect(isFunction(123)).toBeFalsy()
+		expect(isFunction('function')).toBeFalsy()
+		expect(isFunction(null)).toBeFalsy()
+		expect(isFunction({})).toBeFalsy()
 	})
 
 	const methods = {
