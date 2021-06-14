@@ -7,7 +7,13 @@ export function flatten<T = any>(
 	return baseFlatten(array, depth)
 }
 
-function baseFlatten(array, depth, result?){
+export function flattenDeep<T = any>(
+	array: T[]
+){
+	return baseFlatten(array, Infinity)
+}
+
+export function baseFlatten(array, depth = 1, result?){
 	result = result || []
 	for (let i of array){
 		if (depth > 0 && isArray(i)){

@@ -1,5 +1,5 @@
 import { isObject } from "@/predicate/isObject";
-import { getStringTag } from "@/object/getStringTag";
+import { toStringTag } from "@/object/toStringTag";
 
 /**
  * Checks if `value` is a plain object, which is created by the `{}` object literal notation or `Object` constructor.
@@ -7,20 +7,20 @@ import { getStringTag } from "@/object/getStringTag";
  * @param value: the value to check
  */
 export function isPlainObject(value: any): value is object {
-	if (!isObject(value) || getStringTag(value) !== 'Object'){
+	if (!isObject(value) || toStringTag(value) !== 'Object'){
 		return false
 	}
 
-	const getPrototypeOf = Object.getPrototypeOf
+	const getProtoOf = Object.getPrototypeOf
 
-	if (getPrototypeOf(value) === null){
+	if (getProtoOf(value) === null){
 		return true
 	}
 
 	let proto = value
-	while (getPrototypeOf(proto) !== null){
-		proto = getPrototypeOf(proto)
+	while (getProtoOf(proto) !== null){
+		proto = getProtoOf(proto)
 	}
 
-	return getPrototypeOf(value) === proto
+	return getProtoOf(value) === Object.prototype
 }

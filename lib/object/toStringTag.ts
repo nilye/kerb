@@ -2,11 +2,11 @@ import { isObject } from "@/predicate/isObject";
 import { isString } from "@/predicate/isString";
 
 /**
- * Gets the `Symbol.toStringTag` of a value
+ * Gets the string description of an object.
  *
  * @param value: the value to query
  */
-export function getStringTag(value: any): string {
+export function toStringTag(value: any): string {
 
 	/**
 	 * if Symbol.toStringTag is available

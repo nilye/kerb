@@ -12,7 +12,7 @@ export function slice<T = any>(
 	array: any,
 	start?: number,
 	end?: number
-): T[]{
+): T[] {
 	if (!isArrayLike(array)) return []
 	const length = isNil(array) ? 0 : array.length
 	if (!length) return []
@@ -23,5 +23,10 @@ export function slice<T = any>(
 		return array
 	}
 
-	return Array.prototype.slice.call(array, start, end)
+	return baseSlice(array, start, end)
+}
+
+
+export function baseSlice(array, ...args: number[]){
+	return Array.prototype.slice.apply(array, args)
 }

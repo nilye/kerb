@@ -1,4 +1,4 @@
-import { flatten } from "../flatten";
+import { flatten, flattenDeep } from "../flatten";
 
 describe('flatten', () => {
 	test('no depth', () => {
@@ -14,5 +14,6 @@ describe('flatten', () => {
 	test('infinity depth', () => {
 		const arr = [1,2,[3,4,[5,6,[7,8,[9,10]]]]]
 		expect(flatten(arr, Infinity)).toEqual([1,2,3,4,5,6,7,8,9,10])
+		expect(flattenDeep(arr)).toEqual([1,2,3,4,5,6,7,8,9,10])
 	})
 })
