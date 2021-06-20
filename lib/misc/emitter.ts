@@ -11,9 +11,19 @@ export function createEmitter(){
 
 	const store = new Map<EventType, Set<Listener>>()
 
+
+	/**
+	 * Add a listener of the given event `type`.
+	 *
+	 * ex: pass just the listener to listen to all events
+	 * `emitter.on(function(){ ... })`
+	 *
+	 * @param type
+	 * @param listener
+	 */
 	function on<T = any>(
 		type: EventType | Listener<T>,
-		listener: Listener<T>
+		listener?: Listener<T>
 	): () => void {
 
 		if (isFunction(type)){
@@ -36,20 +46,34 @@ export function createEmitter(){
 		}
 	}
 
+
+	/**
+	 * Add a listener of the given event `type`, and only invoke once.
+	 * @param type
+	 * @param listener
+	 */
 	function once<T = any>(
 		type: EventType | Listener<T>,
-		listener: Listener<T>
+		listener?: Listener<T>
 	){
-		const wrapper = (...args) => {
-			off(type, wrapper)
-			listener.apply(this, args)
+		const remover = () => {
+			stopRemover()
+			stop()
 		}
-		on(type, wrapper)
+		const stop = on(type, listener)
+		const stopRemover = on(type, remover)
+		return stop
 	}
 
+
+	/**
+	 * remove a `listener` of the given event `type`
+	 * @param type
+	 * @param listener
+	 */
 	function off<T = any>(
 		type: EventType | Listener<T>,
-		listener: Listener<T>
+		listener?: Listener<T>
 	){
 
 		if (isFunction(type)){
@@ -63,17 +87,35 @@ export function createEmitter(){
 		}
 	}
 
-	function removeAll(type: EventType){
+
+	/**
+	 * remove all listeners of the given event `type`
+	 * @param type
+	 */
+	function removeAll(type?: EventType){
+		if (!type) type = WILD_CARD
 		store.delete(type)
 	}
 
-	function listeners(type: EventType){
+
+	/**
+	 * get all listeners of the given  event `type`
+	 * @param type
+	 */
+	function listeners(type?: EventType){
+		if (!type) type = WILD_CARD
 		const set = store.get(type)
 		return set ? Array.from(set) : []
 	}
 
+
+	/**
+	 * emit event of a certain `type`
+	 * @param type
+	 * @param payload
+	 */
 	function emit<T = any>(
-		type: EventType | T,
+		type?: EventType | T,
 		...payload: T[]
 	){
 		const wildListeners = store.get(WILD_CARD)
@@ -89,6 +131,7 @@ export function createEmitter(){
 		}
 	}
 
+	// return emitter object
 	return {
 		on,
 		once,
